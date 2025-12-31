@@ -10,11 +10,11 @@ resize();
 window.addEventListener("resize", resize);
 
 // Bintang jatuh
-let stars = Array.from({length: 100}, () => ({
+let stars = Array.from({length: 120}, () => ({
   x: Math.random()*canvas.width,
   y: Math.random()*canvas.height,
   r: Math.random()*2,
-  dy: Math.random()*1 + 0.2
+  dy: Math.random()*1.2 + 0.3
 }));
 
 function animateStars() {
@@ -45,51 +45,39 @@ function launchFirework() {
   });
 }
 
-function heartPattern(x,y){
-  let p = [];
-  for(let t=0; t<Math.PI*2; t+=0.2){
-    let r = 15*(1-Math.sin(t)); // lebih besar
-    p.push({x,y,dx:r*Math.cos(t)*0.5,dy:-r*Math.sin(t)*0.5,life:80,color:"#f0f"});
+// Ledakan hati diperbesar
+function heartPattern(x, y) {
+  const p = [];
+  for (let t = 0; t < Math.PI * 2; t += 0.15) {
+    const r = 25*(1-Math.sin(t)); // lebih besar
+    p.push({ x, y, dx: r*Math.cos(t)*0.6, dy: -r*Math.sin(t)*0.6, life: 100, color:"#f0f" });
   }
   return p;
 }
 
-function textPattern(x,y,text){
-  let p=[];
-  ctx.font="bold 70px Orbitron";
-  ctx.fillText(text,x-100,y);
-  let data=ctx.getImageData(x-150,y-80,300,160).data;
-  ctx.clearRect(x-150,y-80,300,160);
-  for(let i=0;i<data.length;i+=4){
-    if(data[i+3]>150){
-      let px=x-150+(i/4)%300;
-      let py=y-80+Math.floor(i/4/300);
-      p.push({x:px,y:py,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,life:120,color:"#0ff"});
-    }
-  }
-  return p;
-}
-
+// explode tanpa teks, semua pakai heartPattern
 function explode(fw){
-  fw.particles = Math.random()<0.6 ? heartPattern(fw.x,fw.y) : textPattern(fw.x,fw.y,"2026");
+  fw.particles = heartPattern(fw.x, fw.y);
 }
 
-function animateFireworks(){
+function animateFireworks() {
   if(!fireworksActive) return;
   fireworks.forEach((fw,i)=>{
     if(!fw.exploded){
-      fw.y -= 8; // lebih cepat
+      fw.y -= 10; // lebih cepat
       ctx.fillStyle="#fff";
-      ctx.fillRect(fw.x,fw.y,3,3);
+      ctx.fillRect(fw.x,fw.y,4,4); // lebih besar
       if(fw.y<=fw.targetY){
         fw.exploded=true;
         explode(fw);
       }
     } else {
       fw.particles.forEach((p,j)=>{
-        p.x+=p.dx; p.y+=p.dy; p.life--;
+        p.x+=p.dx;
+        p.y+=p.dy;
+        p.life--;
         ctx.fillStyle=p.color;
-        ctx.fillRect(p.x,p.y,3,3);
+        ctx.fillRect(p.x,p.y,4,4); // partikel lebih besar
         if(p.life<=0) fw.particles.splice(j,1);
       });
     }
@@ -98,7 +86,7 @@ function animateFireworks(){
   requestAnimationFrame(animateFireworks);
 }
 
-/* ===== COUNTDOWN 10 DETIK UNTUK TEST ===== */
+/* ===== COUNTDOWN 10 DETIK ===== */
 const newYear = Date.now() + 10000; // 10 detik
 const days = document.getElementById("days");
 const hours = document.getElementById("hours");
@@ -120,12 +108,13 @@ const timer = setInterval(()=>{
     subtitle.innerText="Semoga semua harapan tercapai ✨";
     title.classList.add("newyear");
 
-    document.querySelectorAll("input, textarea, button").forEach(el=>{
-      if(!localStorage.getItem("submitted")) el.disabled=false;
-    });
+    // Aktifkan form kalau belum submit
+    if(!localStorage.getItem("submitted")){
+      document.querySelectorAll("input, textarea, button").forEach(el=>el.disabled=false);
+    }
 
     fireworksActive=true;
-    setInterval(launchFirework,900);
+    setInterval(launchFirework, 700);
     animateFireworks();
     return;
   }
@@ -155,6 +144,7 @@ function saveWish(){
 
   alert("Harapan tersimpan 🎆");
 
+  // ubah tampilan setelah submit
   document.querySelector(".container").innerHTML=`
     <h1 id="title">SEE YOU ON 2027</h1>
     <p id="subtitle"></p>
@@ -174,7 +164,7 @@ function openAdmin(){
   } else alert("Akses ditolak ❌");
 }
 
-/* ===== AKTIFKAN INPUT KALAU BELUM SUBMIT ===== */
+/* ===== AKTIFKAN FORM JIKA BELUM SUBMIT ===== */
 if(!localStorage.getItem("submitted")){
   document.querySelectorAll("input, textarea, button").forEach(el=>el.disabled=false);
 }
