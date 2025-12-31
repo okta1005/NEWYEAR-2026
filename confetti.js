@@ -4,15 +4,15 @@ function startConfetti(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let confetti = [];
+    let confetti=[];
     for(let i=0;i<150;i++){
         confetti.push({
-            x: Math.random()*canvas.width,
-            y: Math.random()*canvas.height,
-            r: Math.random()*6+2,
-            d: Math.random()*150+1,
-            color: `hsl(${Math.random()*360},100%,50%)`,
-            tilt: Math.random()*10-10
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            r:Math.random()*6+2,
+            d:Math.random()*150+1,
+            color:['#ff00ff','#0ff','#ff0099','#00ff99'][Math.floor(Math.random()*4)],
+            tilt:Math.random()*10-10
         });
     }
 
@@ -20,10 +20,10 @@ function startConfetti(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         confetti.forEach(c=>{
             ctx.beginPath();
-            ctx.lineWidth = c.r;
-            ctx.strokeStyle = c.color;
-            ctx.moveTo(c.x + c.tilt + c.r/2, c.y);
-            ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r/2);
+            ctx.lineWidth=c.r;
+            ctx.strokeStyle=c.color;
+            ctx.moveTo(c.x+c.tilt+c.r/2,c.y);
+            ctx.lineTo(c.x+c.tilt,c.y+c.tilt+c.r/2);
             ctx.stroke();
         });
         update();
@@ -31,8 +31,8 @@ function startConfetti(){
 
     function update(){
         confetti.forEach(c=>{
-            c.y += Math.cos(0.01*c.d)+1+c.r/2;
-            c.x += Math.sin(0.01*c.d);
+            c.y+=Math.cos(0.01*c.d)+1+c.r/2;
+            c.x+=Math.sin(0.01*c.d);
             if(c.y>canvas.height) c.y=0;
         });
     }
