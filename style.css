@@ -1,35 +1,13 @@
 body{
     margin:0;
     padding:0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     color:#fff;
     overflow-x: hidden;
     position: relative;
 
-    /* Animated gradient background */
-    background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0a0a0a, #111);
-    background-size: 400% 400%;
-    animation: gradientBG 10s ease infinite;
-}
-
-/* Gradient animation */
-@keyframes gradientBG{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
-
-/* Bintang / particle overlay */
-body::after{
-    content:"";
-    position:fixed;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    background: url('images/stars.png') repeat;
-    opacity:0.3;
-    pointer-events:none;
-    z-index:0;
+    /* Cyberpunk neon background grid */
+    background: radial-gradient(circle at 50% 50%, #0f0f0f 0%, #020202 100%);
 }
 
 .overlay{
@@ -38,7 +16,7 @@ body::after{
     left:0;
     width:100%;
     height:100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     z-index:0;
 }
 
@@ -48,23 +26,25 @@ body::after{
     max-width:500px;
     margin:50px auto;
     padding:20px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.2);
+    border: 2px solid #0ff;
     border-radius:15px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
     text-align:center;
+    box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
 }
 
 h1{
     font-size:2.5em;
-    color: #ff66cc;
-    text-shadow: 0 0 5px #ff66cc, 0 0 20px #ff0066, 0 0 30px #ff66cc;
-    animation: glow 1.5s infinite alternate;
+    color: #ff00ff;
+    text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #00ffff, 0 0 60px #00ffff;
+    animation: neonGlow 1.5s infinite alternate;
 }
 
-@keyframes glow{
-    0% { text-shadow: 0 0 5px #ff66cc, 0 0 20px #ff0066; }
-    50% { text-shadow: 0 0 10px #ff66cc, 0 0 25px #ff0066, 0 0 35px #ff66cc; }
-    100% { text-shadow: 0 0 5px #ff66cc, 0 0 20px #ff0066; }
+@keyframes neonGlow{
+    0% { text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #00ffff, 0 0 60px #00ffff; }
+    50% { text-shadow: 0 0 15px #ff00ff, 0 0 30px #ff00ff, 0 0 60px #00ffff, 0 0 100px #00ffff; }
+    100% { text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff00ff, 0 0 30px #00ffff, 0 0 60px #00ffff; }
 }
 
 input, textarea{
@@ -72,23 +52,31 @@ input, textarea{
     padding:10px;
     margin:10px 0;
     border-radius:5px;
-    border:none;
+    border: 1px solid #0ff;
+    background: rgba(0,0,0,0.3);
+    color:#0ff;
+}
+
+input::placeholder, textarea::placeholder{
+    color:#0ff;
 }
 
 button{
     padding:15px 30px;
     border-radius:10px;
-    background: linear-gradient(45deg, #ff0066, #ff66cc);
-    color:#fff;
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    color:#000;
     font-weight:bold;
     cursor:pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px #ff66cc;
+    box-shadow: 0 0 15px #ff00ff, 0 0 25px #00ffff;
+    border:none;
+    font-family: 'Orbitron', sans-serif;
 }
 
 button:hover{
     transform: scale(1.2) rotate(-2deg);
-    box-shadow: 0 0 25px #ff0066, 0 0 50px #ff66cc;
+    box-shadow: 0 0 25px #ff00ff, 0 0 50px #00ffff, 0 0 75px #ff00ff;
 }
 
 #fireworks, #confetti{
@@ -101,8 +89,14 @@ button:hover{
     z-index:0;
 }
 
+#adminPanel{
+    border:2px solid #0ff;
+    box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+    font-family: 'Orbitron', sans-serif;
+}
+
 #adminPanel button{
     margin-top:10px;
-    background:#ff0066;
-    color:#fff;
+    background: linear-gradient(45deg,#ff00ff,#00ffff);
+    color:#000;
 }
