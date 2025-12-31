@@ -4,39 +4,34 @@ function startFireworks(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    function randomColor() {
-        return 'hsl(' + (Math.random() * 360) + ',100%,50%)';
+    function randomColor(){
+        let colors = ['#ff00ff','#0ff','#00ff99','#ff0099'];
+        return colors[Math.floor(Math.random()*colors.length)];
     }
 
-    function drawCircle(x, y, radius, color){
+    function drawCircle(x,y,radius,color){
         ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI*2);
-        ctx.fillStyle = color;
+        ctx.arc(x,y,radius,0,Math.PI*2);
+        ctx.fillStyle=color;
         ctx.fill();
     }
 
-    function drawHeart(x, y, size, color){
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.bezierCurveTo(x, y - size/2, x - size, y - size/2, x - size, y);
-        ctx.bezierCurveTo(x - size, y + size/2, x, y + size, x, y + size*1.5);
-        ctx.bezierCurveTo(x, y + size, x + size, y + size/2, x + size, y);
-        ctx.bezierCurveTo(x + size, y - size/2, x, y - size/2, x, y);
-        ctx.fillStyle = color;
-        ctx.fill();
+    function drawPixel(x,y,size,color){
+        ctx.fillStyle=color;
+        ctx.fillRect(x,y,size,size);
     }
 
     setInterval(()=>{
         ctx.clearRect(0,0,canvas.width,canvas.height);
         for(let i=0;i<5;i++){
-            let x = Math.random()*canvas.width;
-            let y = Math.random()*canvas.height/2;
-            drawCircle(x,y, Math.random()*20+10, randomColor());
+            let x=Math.random()*canvas.width;
+            let y=Math.random()*canvas.height/2;
+            drawCircle(x,y,Math.random()*15+5,randomColor());
         }
-        for(let i=0;i<2;i++){
-            let x = Math.random()*canvas.width;
-            let y = Math.random()*canvas.height/2;
-            drawHeart(x,y,20, randomColor());
+        for(let i=0;i<3;i++){
+            let x=Math.random()*canvas.width;
+            let y=Math.random()*canvas.height/2;
+            drawPixel(x,y,6,randomColor());
         }
-    }, 300);
+    },300);
 }
