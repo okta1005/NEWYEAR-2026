@@ -15,7 +15,7 @@
 
     <div id="countdown-container">
         <h2 id="countdown"></h2>
-        <p>Form akan terbuka saat jam 00:00 1 Januari 2026!</p>
+        <p>Form akan terbuka setelah countdown habis!</p>
     </div>
 
     <div id="form-container" style="display:none;">
@@ -44,13 +44,13 @@
 <script src="fireworks.js"></script>
 <script src="confetti.js"></script>
 <script>
-// Countdown Timer
-let countdownDate = new Date("Jan 1, 2026 00:00:00").getTime();
+// Countdown Timer (10 detik demo)
+let countdownDate = new Date().getTime() + 10000; // 10 detik dari sekarang
 let countdownContainer = document.getElementById("countdown-container");
 let formContainer = document.getElementById("form-container");
 let thankyou = document.getElementById("thankyou");
 
-// Cek localStorage
+// Ambil data dari localStorage
 let submitted = localStorage.getItem("submitted");
 let allWishes = JSON.parse(localStorage.getItem("allWishes") || "[]");
 
@@ -59,11 +59,8 @@ let x = setInterval(function() {
     let distance = countdownDate - now;
 
     if(distance > 0){
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24))/(1000*60*60));
-        let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-        let seconds = Math.floor((distance % (1000*60))/1000);
-        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        let seconds = Math.floor(distance / 1000);
+        document.getElementById("countdown").innerHTML = seconds + " detik";
     } else {
         clearInterval(x);
         countdownContainer.style.display = "none";
@@ -76,7 +73,7 @@ let x = setInterval(function() {
         startFireworks();
         startConfetti();
     }
-}, 1000);
+}, 500);
 
 // Handle Form Submit
 document.getElementById("wishForm").addEventListener("submit", function(e){
