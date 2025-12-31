@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-* { box-sizing: border-box; margin: 0; padding:0; }
+* { box-sizing: border-box; margin:0; padding:0; }
 
 body {
   font-family: 'Orbitron', sans-serif;
@@ -30,17 +30,15 @@ body::after {
   animation: aura 6s infinite alternate;
   z-index: -1;
 }
-@keyframes aura {
-  to { transform: translateY(-40px); }
-}
+@keyframes aura { to { transform: translateY(-40px); } }
 
 /* CONTAINER */
 .container {
-  max-width: 550px;
+  max-width: 600px;
   margin: 10vh auto;
-  padding: 35px;
+  padding: 40px;
   border-radius: 22px;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   backdrop-filter: blur(15px);
   text-align: center;
   position: relative;
@@ -60,19 +58,19 @@ body::after {
 @keyframes border { to { background-position: 300%; } }
 
 /* COUNTDOWN */
-#countdown { font-size: 24px; margin-bottom: 15px; text-shadow: 0 0 10px #0ff; }
-#countdown span { font-size: 30px; font-weight: bold; }
+#countdown { font-size: 26px; margin-bottom: 20px; text-shadow: 0 0 10px #0ff; }
+#countdown span { font-size: 32px; font-weight: bold; }
 
 /* TITLE */
 h1 { margin: 10px 0; text-shadow: 0 0 20px #0ff; }
 .newyear { animation: pulse 1.2s infinite; }
-@keyframes pulse { 50% { text-shadow: 0 0 40px #f0f; } }
+@keyframes pulse { 50% { text-shadow: 0 0 50px #f0f; } }
 
 /* FORM */
 input, textarea {
   width: 100%;
   margin-top: 14px;
-  padding: 15px;
+  padding: 18px;
   border-radius: 12px;
   background: rgba(0,0,0,0.9);
   border: 1px solid #0ff;
@@ -80,11 +78,11 @@ input, textarea {
   font-size: 16px;
 }
 
-textarea { resize: none; height: 100px; }
+textarea { resize: none; height: 110px; }
 
 button {
   margin-top: 20px;
-  padding: 15px;
+  padding: 16px;
   width: 100%;
   border-radius: 30px;
   border: none;
