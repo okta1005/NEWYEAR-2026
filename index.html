@@ -2,13 +2,15 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Countdown 2026</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
+  <canvas id="stars"></canvas>
 
+  <div class="container">
     <div id="countdown">
       <span id="days">00</span>d :
       <span id="hours">00</span>h :
@@ -23,6 +25,7 @@
     <textarea id="wish" placeholder="Harapan kamu di 2026..." disabled></textarea>
     <button id="sendBtn" onclick="saveWish()" disabled>Kirim Harapan</button>
 
+    <div id="marquee">tommorow is the first blank page of a 365-page book. write a good one</div>
     <div id="wishList"></div>
   </div>
 
