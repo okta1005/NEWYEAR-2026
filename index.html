@@ -29,10 +29,8 @@
     </div>
 </div>
 
-<!-- Tombol admin -->
 <button id="adminBtn" title="Admin" class="neon-btn admin-btn">Admin</button>
 
-<!-- Panel Admin -->
 <div id="adminPanel" class="admin-panel" style="display:none;">
   <h2>Daftar Harapan</h2>
   <div id="wishList"></div>
@@ -40,12 +38,10 @@
 </div>
 
 <canvas id="fireworks"></canvas>
-<canvas id="confetti"></canvas>
+<canvas id="particle"></canvas>
 
 <script src="fireworks.js"></script>
-<script src="confetti.js"></script>
 <script>
-// Countdown demo 10 detik
 let countdownDate = new Date().getTime() + 10000; 
 let countdownContainer = document.getElementById("countdown-container");
 let formContainer = document.getElementById("form-container");
@@ -64,18 +60,17 @@ let x = setInterval(function() {
     } else {
         clearInterval(x);
         countdownContainer.style.display = "none";
+        thankyou.style.display = "block";
+        thankyou.innerHTML = `<h1 class="neon-title" style="font-size:3em;">WELCOME 2026</h1>`;
+        startFireworks();
+        startParticles();
+
         if(!submitted){
             formContainer.style.display = "block";
-        } else {
-            thankyou.style.display = "block";
-            thankyou.innerHTML = "<h2>SEE YOU ON 2027</h2><p style='font-size:12px;'>by OKTXVNUS</p>";
         }
-        startFireworks();
-        startConfetti();
     }
 }, 500);
 
-// Form submit
 document.getElementById("wishForm").addEventListener("submit", function(e){
     e.preventDefault();
     let name = document.getElementById("name").value;
@@ -86,8 +81,7 @@ document.getElementById("wishForm").addEventListener("submit", function(e){
     localStorage.setItem("submitted","true");
 
     formContainer.style.display = "none";
-    thankyou.style.display = "block";
-    thankyou.innerHTML = "<h2>SEE YOU ON 2027</h2><p style='font-size:12px;'>by OKTXVNUS</p>";
+    thankyou.innerHTML = `<h1 class="neon-title" style="font-size:3em;">WELCOME 2026</h1>`;
 });
 
 // Admin
