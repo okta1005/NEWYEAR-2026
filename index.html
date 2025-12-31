@@ -1,111 +1,33 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harapan Tahun Baru 2026 Cyberpunk</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Countdown 2026</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="overlay"></div>
+  <div class="container">
 
-<div class="container">
-    <h1 class="neon-title">Harapan & Keinginanmu 2026</h1>
-
-    <div id="countdown-container">
-        <h2 id="countdown" class="neon-countdown"></h2>
-        <p class="neon-text">Form akan terbuka setelah countdown habis!</p>
+    <div id="countdown">
+      <span id="days">00</span>d :
+      <span id="hours">00</span>h :
+      <span id="minutes">00</span>m :
+      <span id="seconds">00</span>s
     </div>
 
-    <div id="form-container" style="display:none;">
-        <form id="wishForm">
-            <input type="text" id="name" placeholder="Nama Kamu" required>
-            <textarea id="wish" placeholder="Harapan & Keinginanmu" required></textarea>
-            <button type="submit" class="neon-btn">Kirim Harapan</button>
-        </form>
-        <p id="thankyou" style="display:none;"></p>
-    </div>
-</div>
+    <h1 id="title">SYSTEM REBOOT</h1>
+    <p id="subtitle">2026 Incoming...</p>
 
-<button id="adminBtn" title="Admin" class="neon-btn admin-btn">Admin</button>
+    <input type="text" id="name" placeholder="Nama kamu" disabled>
+    <textarea id="wish" placeholder="Harapan kamu di 2026..." disabled></textarea>
+    <button id="sendBtn" onclick="saveWish()" disabled>Kirim Harapan</button>
 
-<div id="adminPanel" class="admin-panel" style="display:none;">
-  <h2>Daftar Harapan</h2>
-  <div id="wishList"></div>
-  <button onclick="closeAdmin()" class="neon-btn">Close</button>
-</div>
+    <div id="wishList"></div>
+  </div>
 
-<canvas id="fireworks"></canvas>
-<canvas id="particle"></canvas>
+  <button class="admin-btn" onclick="openAdmin()">Admin</button>
 
-<script src="fireworks.js"></script>
-<script>
-let countdownDate = new Date().getTime() + 10000; 
-let countdownContainer = document.getElementById("countdown-container");
-let formContainer = document.getElementById("form-container");
-let thankyou = document.getElementById("thankyou");
-
-let submitted = localStorage.getItem("submitted");
-let allWishes = JSON.parse(localStorage.getItem("allWishes") || "[]");
-
-let x = setInterval(function() {
-    let now = new Date().getTime();
-    let distance = countdownDate - now;
-
-    if(distance > 0){
-        let seconds = Math.floor(distance / 1000);
-        document.getElementById("countdown").innerHTML = seconds + " DETIK";
-    } else {
-        clearInterval(x);
-        countdownContainer.style.display = "none";
-        thankyou.style.display = "block";
-        thankyou.innerHTML = `<h1 class="neon-title" style="font-size:3em;">WELCOME 2026</h1>`;
-        startFireworks();
-        startParticles();
-
-        if(!submitted){
-            formContainer.style.display = "block";
-        }
-    }
-}, 500);
-
-document.getElementById("wishForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    let name = document.getElementById("name").value;
-    let wish = document.getElementById("wish").value;
-
-    allWishes.push({name, wish});
-    localStorage.setItem("allWishes", JSON.stringify(allWishes));
-    localStorage.setItem("submitted","true");
-
-    formContainer.style.display = "none";
-    thankyou.innerHTML = `<h1 class="neon-title" style="font-size:3em;">WELCOME 2026</h1>`;
-});
-
-// Admin
-document.getElementById("adminBtn").addEventListener("click", function(){
-    let password = prompt("Masukkan password admin:");
-    if(password === "OKTXVNUS123"){
-        showAdminPanel();
-    } else {
-        alert("Password salah!");
-    }
-});
-
-function showAdminPanel(){
-    let list = document.getElementById("wishList");
-    list.innerHTML = "";
-    allWishes.forEach((w,i)=>{
-        list.innerHTML += `<p><b>${i+1}. ${w.name}:</b> ${w.wish}</p>`;
-    });
-    document.getElementById("adminPanel").style.display = "block";
-}
-
-function closeAdmin(){
-    document.getElementById("adminPanel").style.display = "none";
-}
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
