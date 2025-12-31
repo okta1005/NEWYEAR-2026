@@ -1,23 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding:0; }
 
 body {
-  margin: 0;
   font-family: 'Orbitron', sans-serif;
-  background: radial-gradient(circle at top, #020024, #000);
+  background: radial-gradient(circle at center, #020024, #000);
   color: #0ff;
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
 }
 
-/* CANVAS */
-canvas {
+/* CANVAS BINTANG */
+canvas#stars {
   position: fixed;
   inset: 0;
   z-index: -2;
 }
 
-/* AURA */
+/* AURA NEON */
 body::after {
   content: "";
   position: fixed;
@@ -28,19 +30,18 @@ body::after {
   animation: aura 6s infinite alternate;
   z-index: -1;
 }
-
 @keyframes aura {
   to { transform: translateY(-40px); }
 }
 
-/* CARD */
+/* CONTAINER */
 .container {
-  max-width: 420px;
-  margin: 12vh auto;
-  padding: 30px;
+  max-width: 550px;
+  margin: 10vh auto;
+  padding: 35px;
   border-radius: 22px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(20px);
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(15px);
   text-align: center;
   position: relative;
 }
@@ -56,56 +57,34 @@ body::after {
   animation: border 4s linear infinite;
   z-index: -1;
 }
-
-@keyframes border {
-  to { background-position: 300%; }
-}
+@keyframes border { to { background-position: 300%; } }
 
 /* COUNTDOWN */
-#countdown {
-  font-size: 20px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px #0ff;
-}
-
-#countdown span {
-  font-size: 26px;
-  font-weight: bold;
-}
+#countdown { font-size: 24px; margin-bottom: 15px; text-shadow: 0 0 10px #0ff; }
+#countdown span { font-size: 30px; font-weight: bold; }
 
 /* TITLE */
-h1 {
-  margin: 10px 0;
-  text-shadow: 0 0 20px #0ff;
-}
-
-.newyear {
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-  50% { text-shadow: 0 0 40px #f0f; }
-}
+h1 { margin: 10px 0; text-shadow: 0 0 20px #0ff; }
+.newyear { animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { text-shadow: 0 0 40px #f0f; } }
 
 /* FORM */
 input, textarea {
   width: 100%;
   margin-top: 14px;
-  padding: 12px;
+  padding: 15px;
   border-radius: 12px;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.9);
   border: 1px solid #0ff;
   color: #0ff;
+  font-size: 16px;
 }
 
-textarea {
-  resize: none;
-  height: 90px;
-}
+textarea { resize: none; height: 100px; }
 
 button {
-  margin-top: 18px;
-  padding: 13px;
+  margin-top: 20px;
+  padding: 15px;
   width: 100%;
   border-radius: 30px;
   border: none;
@@ -113,16 +92,12 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-
-button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
+button:disabled { opacity: 0.3; cursor: not-allowed; }
 
 /* ADMIN */
 .admin-btn {
   position: fixed;
-  bottom: 12px;
+  top: 12px;
   right: 12px;
   background: none;
   color: #0ff;
@@ -131,11 +106,21 @@ button:disabled {
   border-radius: 20px;
   opacity: 0.25;
 }
-
 .admin-btn:hover { opacity: 1; }
 
-#wishList {
-  margin-top: 15px;
-  font-size: 12px;
-  display: none;
+/* WISH LIST */
+#wishList { margin-top: 15px; font-size: 12px; display: none; }
+
+/* TEKS BERJALAN */
+#marquee {
+  position: absolute;
+  bottom: -30px;
+  left: 100%;
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 14px;
+  color: #0ff;
+  animation: marquee 15s linear infinite;
+  text-shadow: 0 0 5px #0ff, 0 0 10px #f0f;
 }
+@keyframes marquee { 0% { left: 100%; } 100% { left: -100%; } }
