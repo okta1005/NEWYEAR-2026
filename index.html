@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harapan Tahun Baru 2026</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <h1>Harapan & Keinginanmu untuk 2026</h1>
+
+    <div id="countdown-container">
+        <h2 id="countdown"></h2>
+        <p>Form akan terbuka saat jam 00:00 1 Januari 2026!</p>
+    </div>
+
+    <div id="form-container" style="display:none;">
+        <form id="wishForm">
+            <input type="text" id="name" placeholder="Nama Kamu" required>
+            <textarea id="wish" placeholder="Harapan & Keinginanmu" required></textarea>
+            <button type="submit">Kirim Harapan</button>
+        </form>
+        <p id="thankyou" style="display:none;"></p>
+    </div>
+</div>
+
+<!-- Tombol admin -->
+<button id="adminBtn" title="Admin" style="position:fixed;top:10px;right:10px;z-index:5;">Admin</button>
+
+<!-- Panel Admin -->
+<div id="adminPanel" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);max-width:600px;background:rgba(0,0,0,0.9);color:#fff;padding:20px;border-radius:10px;overflow-y:auto;max-height:70vh;z-index:6;">
+  <h2>Daftar Harapan</h2>
+  <div id="wishList"></div>
+  <button onclick="closeAdmin()">Close</button>
+</div>
+
+<canvas id="fireworks"></canvas>
+<canvas id="confetti"></canvas>
+
+<script src="fireworks.js"></script>
+<script src="confetti.js"></script>
+<script>
+// Countdown Timer
+let countdownDate = new Date("Jan 1, 2026 00:00:00").getTime();
+let countdownContainer = document.getElementById("countdown-container");
+let formContainer = document.getElementById("form-container");
+let thankyou = document.getElementById("thankyou");
+
+// Cek localStorage
+let submitted = localStorage.getItem("submitted");
+let allWishes = JSON.parse(localStorage.getItem("allWishes") || "[]");
+
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = countdownDate - now;
+
+    if(distance > 0){
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24))/(1000*60*60));
+        let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+        let seconds = Math.floor((distance % (1000*60))/1000);
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+    } else {
+        clearInterval(x);
+        countdownContainer.style.display = "none";
+        if(!submitted){
+            formContainer.style.display = "block";
+        } else {
+            thankyou.style.display = "block";
+            thankyou.innerHTML = "<h2>SEE YOU ON 2027</h2><p style='font-size:12px;'>by OKTXVNUS</p>";
+        }
+        startFireworks();
+        startConfetti();
+    }
+}, 1000);
+
+// Handle Form Submit
+document.getElementById("wishForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    let name = document.getElementById("name").value;
+    let wish = document.getElementById("wish").value;
+
+    allWishes.push({name, wish});
+    localStorage.setItem("allWishes", JSON.stringify(allWishes));
+    localStorage.setItem("submitted","true");
+
+    formContainer.style.display = "none";
+    thankyou.style.display = "block";
+    thankyou.innerHTML = "<h2>SEE YOU ON 2027</h2><p style='font-size:12px;'>by OKTXVNUS</p>";
+});
+
+// Admin button
+document.getElementById("adminBtn").addEventListener("click", function(){
+    let password = prompt("Masukkan password admin:");
+    if(password === "OKTXVNUS123"){ // ganti sesuai keinginan
+        showAdminPanel();
+    } else {
+        alert("Password salah!");
+    }
+});
+
+function showAdminPanel(){
+    let list = document.getElementById("wishList");
+    list.innerHTML = "";
+    allWishes.forEach((w,i)=>{
+        list.innerHTML += `<p><b>${i+1}. ${w.name}:</b> ${w.wish}</p>`;
+    });
+    document.getElementById("adminPanel").style.display = "block";
+}
+
+function closeAdmin(){
+    document.getElementById("adminPanel").style.display = "none";
+}
+</script>
+</body>
+</html>
